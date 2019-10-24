@@ -1,6 +1,6 @@
 # Geo Browser
 
-Geo Browser is a web page that let's you browse fictitious caches on a map mimicking [Geocaching](www.geocaching.com). The caches can be filtered by type, size, difficulty, terrain and published date. You can also see some statistics like the number of caches being displayed, the cache in the highest location and the top 3 cache owners. [Try it out!](https://diogit.github.io/PLE-Project-3/geo-browser.html)
+Geo Browser is a web page that let's you browse fictitious caches on a map mimicking [Geocaching](https://geocaching.com). The caches can be filtered by type, size, difficulty, terrain and published date. You can also see some statistics like the number of caches being displayed, the cache in the highest location and the top 3 cache owners. [Try it out!](https://diogit.github.io/PLE-Project-3/geo-browser.html)
 
 ### Made by:
 
