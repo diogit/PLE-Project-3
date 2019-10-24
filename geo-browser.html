@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<HTML>
+<!-- Artur Miguel Dias, 2017 -->
+
+<HEAD>
+<TITLE>Linguagens e Ambientes de Programação (2016/2017) [Eng.Inf. - DI/FCT/UNL] - 3º projeto prático (Javascript)</TITLE>
+<META charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<LINK rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
+<SCRIPT src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></SCRIPT>
+<SCRIPT TYPE="text/javascript" SRC="geo-browser.js"></SCRIPT>
+<STYLE>
+	html, body { font-size:11px; height: 100%;  width: 100%; padding: 0; margin: 0; }
+</STYLE>
+</HEAD>
+
+<BODY ONLOAD="onLoad()">
+<DIV STYLE="position: fixed; top: 0px; left: 0px; height: 100%; width: 200px; background: pink">
+
+
+
+
+
+
+
+<!-- YOUR HTML CODE STARTS HERE -->
+<!-- OUTSIDE THIS AREA, PLEASE DO NOT CHANGE ANYTHING -->
+<!-- INSIDE THIS AREA, CHANGE EVERYTHING YOU WANT -->
+
+<!-- THIS AREA IMPLEMENTS THE CONTROL PANEL -->
+
+<H1>&nbsp;GeoBrowser</H1>
+
+<hr><b>&nbsp;Authors:</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;   45679 Diogo Silverio<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;   48500 João Marques<br/>
+
+<hr><b>&nbsp;Kind:</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="resources/Archived.png" alt="Archived" />
+	<input type="checkbox" id="archived" onchange="archivedCheckboxUpdate(this)"/>
+	<img src="resources/Traditional.png" alt="Traditional" />
+	<input type="checkbox" id="kTraditional" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Multi.png" alt="Multi" />
+	<input type="checkbox" id="kMulti" checked onchange="kindCheckboxUpdate(this)"/>
+	<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="resources/Mystery.png" alt="Mystery" />
+	<input type="checkbox" id="kMystery" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/CITO.png" alt="CITO" />
+	<input type="checkbox" id="kCITO" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Earthcache.png" alt="Earthcache" />
+	<input type="checkbox" id="kEarthcache" checked onchange="kindCheckboxUpdate(this)"/>
+	<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="resources/Event.png" alt="Event" />
+	<input type="checkbox" id="kEvent" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Letterbox.png" alt="Letterbox"/>
+	<input type="checkbox" id="kLetterbox" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Mega.png" alt="Mega" />
+	<input type="checkbox" id="kMega" checked onchange="kindCheckboxUpdate(this)"/>
+	<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="resources/Other.png" alt="Other" />
+	<input type="checkbox" id="kOther" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Virtual.png" alt="Virtual" />
+	<input type="checkbox" id="kVirtual" checked onchange="kindCheckboxUpdate(this)"/>
+	<img src="resources/Webcam.png" alt="Webcam" />
+	<input type="checkbox" id="kWebcam" checked onchange="kindCheckboxUpdate(this)"/>
+	<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="resources/Wherigo.png" alt="Wherigo" />
+	<input type="checkbox" id="kWherigo" checked onchange="kindCheckboxUpdate(this)"/>
+	<br/>
+
+<hr><b>&nbsp;Size:</b>
+&nbsp;&nbsp;&nbsp;&nbsp;
+	<table style="border-spacing: 0px 0px">
+	<tr>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;Micro</td>
+	<td><input type="checkbox" id="sMicro" checked onchange="sizeCheckboxUpdate(this)"/></td>
+
+	<td>Small</td>
+	<td><input type="checkbox" id="sSmall" checked onchange="sizeCheckboxUpdate(this)"/></td>
+	</tr>
+
+	<tr>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;Regular</td>
+	<td><input type="checkbox" id="sRegular" checked onchange="sizeCheckboxUpdate(this)"/></td>
+
+	<td>Large</td>
+	<td><input type="checkbox" id="sLarge" checked onchange="sizeCheckboxUpdate(this)"/></td>
+	</tr>
+
+	<tr>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;Other</td>
+	<td><input type="checkbox" id="sOther" checked onchange="sizeCheckboxUpdate(this)"/></td>
+
+	<td>Unknown</td>
+	<td><input type="checkbox" id="sUnknown" checked onchange="sizeCheckboxUpdate(this)"/></td>
+	</tr>
+	</table>
+
+<hr><b>&nbsp;Difficulty:</b>
+	<input type="text" id="difficulty" readonly value="[1;5]"
+	       style="border:0; background:pink; width:100px"/>
+
+	<table>
+	<tr>
+	<td>Min:</td>
+	<td><input id="difficultyMin" type="range" min="1" max="5" step="0.5"
+	           value="1" oninput="difficultyValue(this)" onchange="populateMap()"/></td>
+	</tr>
+	<tr>
+	<td>Max:</td>
+	<td><input id="difficultyMax" type="range" min="1" max="5" step="0.5"
+	           value="5" oninput="difficultyValue(this)" onchange="populateMap()"/></td>
+	</tr>
+	</table>
+
+<hr><b>&nbsp;Terrain:</b>
+	<input type="text" id="terrain" readonly value="[1;5]"
+	       style="border:0; background:pink; width:100px"/>
+
+	<table>
+	<tr>
+	<td>Min:</td>
+	<td><input id="terrainMin" type="range" min="1" max="5" step="0.5"
+	           value="1" oninput="terrainValue(this)" onchange="populateMap()"/></td>
+	</tr>
+	<tr>
+	<td>Max:</td>
+	<td><input id="terrainMax" type="range" min="1" max="5" step="0.5"
+	           value="5" oninput="terrainValue(this)" onchange="populateMap()"/></td>
+	</tr>
+	</table>
+
+<hr><b>&nbsp;Time:</b><br/>
+&nbsp;
+	<input id="tYear" type="number" min="0" onchange="timeUpdate()" style="width:60px"/>
+	<input id="tMonth" type="number" min="1" max="12" onchange="timeUpdate()" style="width: 35px"/>
+	<input id="tDay" type="number" min="1" max="31" onchange="timeUpdate()" style="width: 35px"/>
+&nbsp;Timelapse:
+	<input type="checkbox" id="timeLapse" onchange="timeLapse(this)"/><br/>
+
+<hr><b>&nbsp;Statistics:</b><br/>
+&nbsp;&nbsp;Caches:
+	<input type="text" id="totalCaches" readonly style="border:0; background:pink; width:80px"/><br/>
+&nbsp;&nbsp;Highest Cache:
+	<input type="text" id="highestCache" readonly style="border:0; background:pink; width:80px"/><br/>
+&nbsp;&nbsp;Top owners:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;1. <input type="text" id="top1" readonly
+		style="border:0; background:pink; width:140px"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;2. <input type="text" id="top2" readonly
+		style="border:0; background:pink; width:140px"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;3. <input type="text" id="top3" readonly
+		style="border:0; background:pink; width:140px"/><br/>
+<hr>
+<!-- YOUR HTML CODE ENDS HERE -->
+
+
+
+
+
+
+
+
+</DIV><DIV STYLE="position: fixed; top: 0px; left: 200px; height: 100%; width: 100%;">
+<DIV ID="map" STYLE="height: 100%"></DIV>
+</DIV>
+</BODY>
+
+</HTML>
