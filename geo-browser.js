@@ -274,7 +274,7 @@ function makeMap(center, zoom)
 function makeLayerMapBox(name, spec)
 {
 	var urlTemplate =
-		  "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png"
+		  "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}"
 		+ "?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXV"
 		+ "ycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 	var attr =
@@ -306,10 +306,12 @@ function makeLayerMapBox(name, spec)
 function addBaseLayers(specs)
 {
 	var controls = {};
-	for(var i in specs)
-		controls[capitalize(specs[i])] =
-			makeLayerMapBox(specs[i], "mapbox." + specs[i]);
-	controls[capitalize(specs[0])].addTo(map);
+	for(var i in specs){
+		const name = specs[i].split('-')[0];
+		controls[capitalize(name)] =
+			makeLayerMapBox(specs[i], "mapbox/" + specs[i]);
+	}
+	controls[capitalize(specs[0].split('-')[0])].addTo(map);
 	L.control.scale({maxWidth: 150, metric: true, imperial: false})
 								.setPosition("topleft").addTo(map);
 	L.control.layers(controls, {}).setPosition("topleft").addTo(map);
@@ -683,9 +685,7 @@ function onLoad()
 
 	makeMap(WORLD_CENTRE, 14);
 	addBaseLayers([
-		"streets", "light", "dark", "satellite", "streets-satellite",
-		"wheatpaste", "streets-basic", "comic", "outdoors", "comic",
-		"run-bike-hike", "pencil", "pirates", "emerald", "high-contrast"
+		"outdoors-v11", "satellite-streets-v11"
 	]);
 	addClickHandler();
 	loadCaches(RESOURCES_DIR + CACHES_FILE);
