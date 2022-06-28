@@ -4,7 +4,7 @@ Geo Browser is a web page that let's you browse fictitious caches on a map mimic
 
 ### Made by:
 
-* Diogo Silvério
+* Diogo Silvério (Self)
 * João Marques
 
 ### Folder Content:
